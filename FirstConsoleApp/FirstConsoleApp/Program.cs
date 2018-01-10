@@ -16,6 +16,7 @@ namespace FirstConsoleApp
             {
 
                 Console.WriteLine("Runnig as server...");
+                Program.PressedKey();
             }
             else
             {
