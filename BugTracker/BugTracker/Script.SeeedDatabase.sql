@@ -10,11 +10,13 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
-IF NOT EXISTS ( SELECT 1 FROM StatusCodes WHERE StatusCodeDesc = 'Unassigned')
+--IF NOT EXISTS ( SELECT 1 FROM StatusCodes WHERE StatusCodeDesc = 'Unassigned')
 
 BEGIN
 	INSERT INTO StatusCodes VALUES ('Unassigned');
 	INSERT INTO StatusCodes VALUES ('In Progress');
 	INSERT INTO StatusCodes VALUES ('Ready for Review');
 	INSERT INTO StatusCodes VALUES ('Closed');
+	INSERT INTO Applications VALUES ('D2L', '3.0','D2L is full of bugs');
+	
 END

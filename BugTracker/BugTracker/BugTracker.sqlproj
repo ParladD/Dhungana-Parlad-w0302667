@@ -83,6 +83,7 @@
     <Build Include="StoredProcedures\Bug\InsertBug.sql" />
     <Build Include="StoredProcedures\Bug\DeleteBugs.sql" />
     <Build Include="StoredProcedures\Bug\GetBug.sql" />
+    <Build Include="StoredProcedures\Users\UserConfirmation.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BugTracker.refactorlog" />
