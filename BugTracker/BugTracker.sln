@@ -4,8 +4,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "BugTracker", "BugTracker\BugTracker.sqlproj", "{33294F66-3483-4285-9747-45CCFE284976}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8A9D2E33-EA8D-4EFC-B7DB-74D2A6DBC5DA} = {8A9D2E33-EA8D-4EFC-B7DB-74D2A6DBC5DA}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugTrackerDataLayer", "BugTrackerDataLayer\BugTrackerDataLayer.csproj", "{B62EB8AE-C6D9-40EC-BFFF-81465BC33A67}"
+	ProjectSection(ProjectDependencies) = postProject
+		{33294F66-3483-4285-9747-45CCFE284976} = {33294F66-3483-4285-9747-45CCFE284976}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugTrackerGui", "BugTrackerGui\BugTrackerGui.csproj", "{8A9D2E33-EA8D-4EFC-B7DB-74D2A6DBC5DA}"
 EndProject
