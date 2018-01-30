@@ -70,10 +70,27 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.UsersTab = new System.Windows.Forms.TabPage();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.BugUpdateComment = new System.Windows.Forms.RichTextBox();
+            this.Save_Bug = new System.Windows.Forms.Button();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.UserID = new System.Windows.Forms.TextBox();
+            this.UserName = new System.Windows.Forms.TextBox();
+            this.UserEmail = new System.Windows.Forms.TextBox();
+            this.UserPhoneNum = new System.Windows.Forms.TextBox();
+            this.Save_User = new System.Windows.Forms.Button();
+            this.UserList = new System.Windows.Forms.ListBox();
+            this.Delete_User = new System.Windows.Forms.Button();
             this.MenuBugTracker.SuspendLayout();
             this.IdentifyTab.SuspendLayout();
             this.ApplicationsTab.SuspendLayout();
             this.BugsTab.SuspendLayout();
+            this.UsersTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // MenuBugTracker
@@ -276,6 +293,10 @@
             // 
             // BugsTab
             // 
+            this.BugsTab.Controls.Add(this.Save_Bug);
+            this.BugsTab.Controls.Add(this.BugUpdateComment);
+            this.BugsTab.Controls.Add(this.label18);
+            this.BugsTab.Controls.Add(this.label17);
             this.BugsTab.Controls.Add(this.BugStatus);
             this.BugsTab.Controls.Add(this.BugRepSteps);
             this.BugsTab.Controls.Add(this.BugDetails);
@@ -483,12 +504,162 @@
             // 
             // UsersTab
             // 
+            this.UsersTab.Controls.Add(this.Delete_User);
+            this.UsersTab.Controls.Add(this.UserList);
+            this.UsersTab.Controls.Add(this.Save_User);
+            this.UsersTab.Controls.Add(this.UserPhoneNum);
+            this.UsersTab.Controls.Add(this.UserEmail);
+            this.UsersTab.Controls.Add(this.UserName);
+            this.UsersTab.Controls.Add(this.UserID);
+            this.UsersTab.Controls.Add(this.label23);
+            this.UsersTab.Controls.Add(this.label22);
+            this.UsersTab.Controls.Add(this.label21);
+            this.UsersTab.Controls.Add(this.label20);
+            this.UsersTab.Controls.Add(this.label19);
             this.UsersTab.Location = new System.Drawing.Point(4, 23);
             this.UsersTab.Name = "UsersTab";
             this.UsersTab.Size = new System.Drawing.Size(989, 439);
             this.UsersTab.TabIndex = 3;
             this.UsersTab.Text = "Users";
             this.UsersTab.UseVisualStyleBackColor = true;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(707, 22);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(160, 13);
+            this.label17.TabIndex = 21;
+            this.label17.Text = "Bug Activity Log:\r\n";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(707, 257);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(151, 13);
+            this.label18.TabIndex = 22;
+            this.label18.Text = "Update Comments:\r\n";
+            // 
+            // BugUpdateComment
+            // 
+            this.BugUpdateComment.Location = new System.Drawing.Point(710, 273);
+            this.BugUpdateComment.Name = "BugUpdateComment";
+            this.BugUpdateComment.Size = new System.Drawing.Size(263, 87);
+            this.BugUpdateComment.TabIndex = 23;
+            this.BugUpdateComment.Text = "";
+            // 
+            // Save_Bug
+            // 
+            this.Save_Bug.Location = new System.Drawing.Point(871, 379);
+            this.Save_Bug.Name = "Save_Bug";
+            this.Save_Bug.Size = new System.Drawing.Size(102, 38);
+            this.Save_Bug.TabIndex = 24;
+            this.Save_Bug.Text = "Save ";
+            this.Save_Bug.UseVisualStyleBackColor = true;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.Location = new System.Drawing.Point(53, 27);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(132, 18);
+            this.label19.TabIndex = 0;
+            this.label19.Text = "User Manager";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(126, 96);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(79, 13);
+            this.label20.TabIndex = 1;
+            this.label20.Text = "User ID:";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(126, 137);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(97, 13);
+            this.label21.TabIndex = 2;
+            this.label21.Text = "User Name:";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(126, 177);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(133, 13);
+            this.label22.TabIndex = 3;
+            this.label22.Text = "Email Address:";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(126, 218);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(97, 13);
+            this.label23.TabIndex = 4;
+            this.label23.Text = "Phone Num:";
+            // 
+            // UserID
+            // 
+            this.UserID.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.UserID.Location = new System.Drawing.Point(280, 95);
+            this.UserID.Name = "UserID";
+            this.UserID.Size = new System.Drawing.Size(137, 13);
+            this.UserID.TabIndex = 5;
+            // 
+            // UserName
+            // 
+            this.UserName.Location = new System.Drawing.Point(280, 134);
+            this.UserName.Name = "UserName";
+            this.UserName.Size = new System.Drawing.Size(234, 20);
+            this.UserName.TabIndex = 6;
+            // 
+            // UserEmail
+            // 
+            this.UserEmail.Location = new System.Drawing.Point(280, 174);
+            this.UserEmail.Name = "UserEmail";
+            this.UserEmail.Size = new System.Drawing.Size(234, 20);
+            this.UserEmail.TabIndex = 7;
+            // 
+            // UserPhoneNum
+            // 
+            this.UserPhoneNum.Location = new System.Drawing.Point(280, 215);
+            this.UserPhoneNum.Name = "UserPhoneNum";
+            this.UserPhoneNum.Size = new System.Drawing.Size(234, 20);
+            this.UserPhoneNum.TabIndex = 8;
+            // 
+            // Save_User
+            // 
+            this.Save_User.Location = new System.Drawing.Point(426, 371);
+            this.Save_User.Name = "Save_User";
+            this.Save_User.Size = new System.Drawing.Size(88, 40);
+            this.Save_User.TabIndex = 9;
+            this.Save_User.Text = "Save";
+            this.Save_User.UseVisualStyleBackColor = true;
+            // 
+            // UserList
+            // 
+            this.UserList.FormattingEnabled = true;
+            this.UserList.Items.AddRange(new object[] {
+            "<Add New>"});
+            this.UserList.Location = new System.Drawing.Point(661, 95);
+            this.UserList.Name = "UserList";
+            this.UserList.Size = new System.Drawing.Size(223, 238);
+            this.UserList.TabIndex = 10;
+            // 
+            // Delete_User
+            // 
+            this.Delete_User.Location = new System.Drawing.Point(796, 371);
+            this.Delete_User.Name = "Delete_User";
+            this.Delete_User.Size = new System.Drawing.Size(88, 40);
+            this.Delete_User.TabIndex = 11;
+            this.Delete_User.Text = "Delete";
+            this.Delete_User.UseVisualStyleBackColor = true;
             // 
             // BugTrackerMainForm
             // 
@@ -505,6 +676,8 @@
             this.ApplicationsTab.PerformLayout();
             this.BugsTab.ResumeLayout(false);
             this.BugsTab.PerformLayout();
+            this.UsersTab.ResumeLayout(false);
+            this.UsersTab.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -553,6 +726,22 @@
         private System.Windows.Forms.ListBox BugListBox;
         private System.Windows.Forms.ComboBox BugStatusList;
         private System.Windows.Forms.ComboBox BugAppList;
+        private System.Windows.Forms.Button Save_Bug;
+        private System.Windows.Forms.RichTextBox BugUpdateComment;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Button Delete_User;
+        private System.Windows.Forms.ListBox UserList;
+        private System.Windows.Forms.Button Save_User;
+        private System.Windows.Forms.TextBox UserPhoneNum;
+        private System.Windows.Forms.TextBox UserEmail;
+        private System.Windows.Forms.TextBox UserName;
+        private System.Windows.Forms.TextBox UserID;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label19;
     }
 }
 
