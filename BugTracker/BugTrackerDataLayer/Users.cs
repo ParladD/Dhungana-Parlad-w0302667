@@ -29,7 +29,6 @@ namespace BugTrackerDataLayer
                     //creating a new sqlparameter and adding it to the list
                     SqlParameter Parameter_UserName = new SqlParameter("UserName", System.Data.SqlDbType.VarChar,80);
                     Parameter_UserName.Value = UserName;
-
                     command.Parameters.Add(Parameter_UserName); 
 
                     SqlDataReader reader = command.ExecuteReader(); //executing the reader to read the data
