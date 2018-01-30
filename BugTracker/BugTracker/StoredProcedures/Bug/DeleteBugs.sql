@@ -8,11 +8,11 @@ AS
 
 			BEGIN TRY		
 				BEGIN TRANSACTION 
-					
-					DELETE FROM Bugs 
-						WHERE BugID = @BugID;
 
 					DELETE FROM BugLog
+						WHERE BugID = @BugID;
+					
+					DELETE FROM Bugs 
 						WHERE BugID = @BugID;
 
 						COMMIT TRANSACTION;

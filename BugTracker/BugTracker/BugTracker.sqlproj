@@ -74,7 +74,7 @@
     <Build Include="StoredProcedures\Application\UpdateApplication.sql" />
     <Build Include="StoredProcedures\Application\DeleteApplication.sql" />
     <Build Include="StoredProcedures\Application\InsertApplication.sql" />
-    <Build Include="StoredProcedures\Users\GetUser.sql" />
+    <Build Include="StoredProcedures\Users\GetUsers.sql" />
     <Build Include="StoredProcedures\Users\InsertUser.sql" />
     <Build Include="StoredProcedures\Users\DeleteUser.sql" />
     <Build Include="StoredProcedures\Users\UpdateUser.sql" />
