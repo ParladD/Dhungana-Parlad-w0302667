@@ -194,7 +194,7 @@ namespace BugTrackerDataLayer
     public class User
     {
 
-        //public int UserID { get; set; }
+        public int UserID { get; set; }
         public string UserName { get; set; }
         public string UserEmail { get; set; }
         public string UserTel { get; set; }
@@ -202,7 +202,7 @@ namespace BugTrackerDataLayer
 
         public void LoadUsers(SqlDataReader reader)
         {
-           // UserID = Int32.Parse(reader["UserID"].ToString());
+            UserID = Int32.Parse(reader["UserID"].ToString());
             UserName = reader["UserName"].ToString();
             UserEmail = reader["UserEmail"].ToString();
             UserTel = reader["UserTel"].ToString();

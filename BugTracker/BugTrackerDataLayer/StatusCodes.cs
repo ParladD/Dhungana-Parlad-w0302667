@@ -45,10 +45,12 @@ namespace BugTrackerDataLayer
 
     public class StatusCode {
 
+        public int StatusCodeID { get; set; }
         public string StatusCodeDescription { get; set;}
 
         public void LoadStatusCode(SqlDataReader reader)
         {
+            StatusCodeID = Int32.Parse(reader["StatusCodeID"].ToString());
             StatusCodeDescription = reader["StatusCodeDesc"].ToString();
         }
 

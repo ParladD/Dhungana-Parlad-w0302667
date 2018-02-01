@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -150,6 +150,7 @@ namespace BugTrackerDataLayer
 
     public class Application
     {
+        public int ApplicationID { get; set; }
         public string ApplicationName { get; set; }
         public string ApplicationVersion { get; set; }
         public string ApplicationDescription { get; set; }
@@ -161,6 +162,7 @@ namespace BugTrackerDataLayer
         /// <param name="reader"> this will be used to read the data</param>
         public void LoadApplication(SqlDataReader reader)
         {
+            ApplicationID = Int32.Parse(reader["AppID"].ToString());
             ApplicationName = reader["AppName"].ToString();
             ApplicationVersion = reader["AppVersion"].ToString();
             ApplicationDescription = reader["AppDesc"].ToString();

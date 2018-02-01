@@ -24,12 +24,12 @@ AS
 								BugDate = @BugDate,
 								BugDesc = @BugDesc,
 								BugDetails = @BugDetails,
-								RepSteps = @RepSteps,
+								RepSteps = @RepSteps, 
 								@FixDate = @FixDate
 								WHERE BugID = @BugID;
 
 						INSERT INTO BugLog 
-						VALUES(@BugDate, @StatusCodeID, @UserID, @BugDesc, @BugID);
+						VALUES(GETdATE(), @BugDate, @StatusCodeID, @UserID, @BugDesc, @BugID);
 
 						COMMIT TRANSACTION;
 			END TRY
