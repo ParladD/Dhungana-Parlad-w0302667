@@ -33,6 +33,9 @@ namespace BugTrackerDataLayer
                         Application app = new Application();
                         app.LoadApplication(reader);
                         apps.Add(app);
+
+
+                   
                     }
 
                 }

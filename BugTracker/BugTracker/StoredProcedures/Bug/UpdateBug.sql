@@ -29,7 +29,7 @@ AS
 								WHERE BugID = @BugID;
 
 						INSERT INTO BugLog 
-						VALUES(GETdATE(), @BugDate, @StatusCodeID, @UserID, @BugDesc, @BugID);
+						VALUES(GETdATE(), @StatusCodeID, @UserID, @BugDesc, @BugID);
 
 						COMMIT TRANSACTION;
 			END TRY

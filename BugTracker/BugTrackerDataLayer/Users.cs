@@ -7,42 +7,45 @@ using System.Threading.Tasks;
 
 namespace BugTrackerDataLayer
 {
-    class Users
+   public class Users
     {
+
+        private bool check;
+
         /// <summary>
         /// this will check if the user exists in the database for logon
         /// </summary>
         /// <param name="UserID"></param>
         /// <returns>if the uses exits than it will return all the detials about the user</returns>
-        public User GetUserConfirmation(string UserName)
+        public bool GetUserConfirmation(string UserName)
         {
 
-            User u = new User();
-
+         
             using (SqlConnection connection = DB.GetSqlConnection())
             {
                 using (SqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = @"UserConfirmation";
+                    command.CommandText = @"UserConfirmation"; 
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
                     //creating a new sqlparameter and adding it to the list
                     SqlParameter Parameter_UserName = new SqlParameter("UserName", System.Data.SqlDbType.VarChar,80);
                     Parameter_UserName.Value = UserName;
-                    command.Parameters.Add(Parameter_UserName); 
+                    command.Parameters.Add(Parameter_UserName);
 
-                    SqlDataReader reader = command.ExecuteReader(); //executing the reader to read the data
+                    SqlParameter Parameter_Exists= new SqlParameter("Exits", System.Data.SqlDbType.Bit, 1);
+                 
+                    Parameter_Exists.Direction = System.Data.ParameterDirection.Output;
+                    command.Parameters.Add(Parameter_Exists);
 
-                    if (reader.Read())
-                    {
-                        u.LoadUsers(reader);
-                    } //Read only if the data is available
+                    command.ExecuteNonQuery();
 
+                    check = (bool)command.Parameters["Exits"].Value;
                 }
 
             }
 
-            return u; //returning the user data
+            return check; //returning the user data
 
 
         }//end of userConfirmation
@@ -62,7 +65,7 @@ namespace BugTrackerDataLayer
             {
                 using (SqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = @"GetUsers";
+                    command.CommandText = @"GetUser";
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
                     SqlDataReader reader = command.ExecuteReader();
@@ -199,8 +202,7 @@ namespace BugTrackerDataLayer
         public string UserEmail { get; set; }
         public string UserTel { get; set; }
       
-
-        public void LoadUsers(SqlDataReader reader)
+     public void LoadUsers(SqlDataReader reader)
         {
             UserID = Int32.Parse(reader["UserID"].ToString());
             UserName = reader["UserName"].ToString();

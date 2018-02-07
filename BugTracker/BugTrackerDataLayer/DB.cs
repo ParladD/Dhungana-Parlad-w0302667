@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BugTrackerDataLayer
 {
-    class DB
+    public class DB
     {
 
 

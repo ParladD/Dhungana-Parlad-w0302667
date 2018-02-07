@@ -1,5 +1,24 @@
 ﻿CREATE PROCEDURE [dbo].[UserConfirmation]
-	@UserName varchar(80)
+	@UserName varchar(80),
+	@Exits bit OUTPUT
+	
+
 AS
-	SELECT UserName, UserEmail, UserTel FROM Users
-	WHERE UserName = @UserName;
+
+BEGIN
+
+	IF EXISTS (SELECT UserName FROM Users
+	WHERE UserName = @UserName)
+	
+		SET @Exits = 1;
+
+	ELSE
+		SET @Exits = 0;
+
+END;
+
+
+	
+ 
+ 
+ 

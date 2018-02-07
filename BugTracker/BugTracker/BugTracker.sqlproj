@@ -91,4 +91,13 @@
   <ItemGroup>
     <PostDeploy Include="Script.SeeedDatabase.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BugTrackerDataLayer\BugTrackerDataLayer.csproj">
+      <Name>BugTrackerDataLayer</Name>
+      <Project>{b62eb8ae-c6d9-40ec-bfff-81465bc33a67}</Project>
+      <Private>True</Private>
+      <IsModelAware>True</IsModelAware>
+      <GenerateSqlClrDdl>True</GenerateSqlClrDdl>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
