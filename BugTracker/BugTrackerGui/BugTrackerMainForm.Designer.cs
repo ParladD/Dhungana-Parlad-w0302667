@@ -578,6 +578,7 @@
             this.Delete_User.TabIndex = 11;
             this.Delete_User.Text = "Delete";
             this.Delete_User.UseVisualStyleBackColor = true;
+            this.Delete_User.Click += new System.EventHandler(this.Delete_User_Click);
             // 
             // UserList
             // 
@@ -586,6 +587,7 @@
             this.UserList.Name = "UserList";
             this.UserList.Size = new System.Drawing.Size(223, 238);
             this.UserList.TabIndex = 10;
+            this.UserList.SelectedIndexChanged += new System.EventHandler(this.UserList_SelectedIndexChanged);
             // 
             // Save_User
             // 
@@ -595,6 +597,7 @@
             this.Save_User.TabIndex = 9;
             this.Save_User.Text = "Save";
             this.Save_User.UseVisualStyleBackColor = true;
+            this.Save_User.Click += new System.EventHandler(this.Save_User_Click);
             // 
             // UserPhoneNum
             // 

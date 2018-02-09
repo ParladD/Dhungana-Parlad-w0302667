@@ -24,8 +24,6 @@ namespace BugTrackerGui
         {
             try
             {
-              
-
                 //set application name
                 applicationName = ConfigurationManager.AppSettings["ApplicationName"].ToString();
 
@@ -35,11 +33,8 @@ namespace BugTrackerGui
 
                 // Loading the Application List
                 LoadApplicationList();
-
-                //Loading the User List
                 LoadUsersList();
-                //Loading BugList
-               // LoadBugList();
+            
 
             }
             catch (SqlException sqlex)
@@ -47,7 +42,7 @@ namespace BugTrackerGui
                 //connection error...
                 DisplayErrorMessage(sqlex.Message);
             }
-        }
+        }//end Mainform load
 
 
         /// <summary>
@@ -69,36 +64,40 @@ namespace BugTrackerGui
             }
 
         }//end button logon click
-    
 
 
-        /// <summary>
-        /// This method will get the users list by executing stored Procedures and fills the list with user name
-        /// </summary>
-        public void LoadUsersList()
+
+        private void LoadBugList()
         {
             //creating new users object called users
-         
-             Users users = new Users();
 
-             List<User> user = users.GetUserList(); //creating a list of User by calling the Userlist method
+            Bugs bugs = new Bugs();
 
-            user.Insert(0, new User()
+            List<Bug> bug = bugs.GetBugList(1); //creating a list of bugs by calling the GetApplicationList method
+
+            bug.Insert(0, new Bug()
             {
-                UserName = "<Add New>" //adding new element in top of the user id
+                BugDesc = "<Add New>"//adding new element in top of the bugs id
             });
 
-            UserList.DataSource = user;
-            UserList.DisplayMember = "UserName"; //defining the memeber that i want to display
+            BugListBox.DataSource = bug;
+            BugListBox.DisplayMember = "BugDesc"; //defining the memeber that i want to display
 
         }//end load user list
 
 
-        /// <summary>
+     
+
+
+//--------------------------------------------------------------------------------------------------------------//
+//---------------------------------- Applications Group --------------------------------------------------------//
+//--------------------------------------------------------------------------------------------------------------//
+        
+       /// <summary>
         /// this methods loads all the applications name on the applist box
         /// </summary>
 
-        public void LoadApplicationList()
+        private void LoadApplicationList()
         {
             //creating new users object called users
 
@@ -118,41 +117,8 @@ namespace BugTrackerGui
 
 
 
-        public void LoadBugList()
-        {
-            //creating new users object called users
-
-            Bugs bugs = new Bugs();
-
-            List<Bug> bug = bugs.GetBugList(1); //creating a list of bugs by calling the GetApplicationList method
-
-            bug.Insert(0, new Bug()
-            {
-                BugDesc = "<Add New>"//adding new element in top of the bugs id
-            });
-
-            BugListBox.DataSource = bug;
-            BugListBox.DisplayMember = "BugDesc"; //defining the memeber that i want to display
-
-        }//end load user list
-
-
-        /// <summary>
-        /// this method is for dispalying the error 
-        /// </summary>
-        /// <param name="message"></param>
-        private void DisplayErrorMessage(string message)
-        {
-            MessageBox.Show(this,
-                message,
-                "Error",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Error);
-        }//end dispaly error msg
-
-
-        /// <summary>
-        /// this method is for appList which will fill the text values based on the select indes for apps
+            /// <summary>
+        /// this method is for appList which will fill the text values based on the select indexs for apps
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -162,6 +128,7 @@ namespace BugTrackerGui
 
             if(selectedApp.ApplicationID!= 0)
             {
+                AppID.Visible = true;
                 AppID.Text = selectedApp.ApplicationID.ToString();
                 AppName.Text = selectedApp.ApplicationName;
                 AppVersion.Text = selectedApp.ApplicationVersion;
@@ -170,38 +137,13 @@ namespace BugTrackerGui
             }
             else
             {
-                AppName.Clear();
                 AppID.Visible = false;
+                AppName.Clear();
                 AppVersion.Clear();
                 AppDesc.Clear();
             }
         
         }//end applist
-
-
-
-
-        /// <summary>
-        /// this method hides all the tabs when the programs loads
-        /// </summary>
-        private void HideTabs()
-        {
-            MenuBugTracker.TabPages.RemoveByKey("ApplicationsTab");
-            MenuBugTracker.TabPages.RemoveByKey("BugsTab");
-            MenuBugTracker.TabPages.RemoveByKey("UsersTab");
-
-        }//end hide tabs
-
-        /// <summary>
-        /// this methods shows all the tabs after the user confirmation is done
-        /// </summary>
-        private void ShowTabs()
-        {
-            MenuBugTracker.TabPages.Add(ApplicationsTab);
-            MenuBugTracker.TabPages.Add(BugsTab);
-            MenuBugTracker.TabPages.Add(UsersTab);
-
-        }//end show tabs
 
 
         /// <summary>
@@ -214,12 +156,14 @@ namespace BugTrackerGui
             Applications applications = new Applications();
             App selectedApp = (App)AppList.SelectedValue;
 
-            int appId = Int32.Parse(AppID.Text);
-            string appName = AppName.Text;
-            string appVersion = AppVersion.Text;
-            string appDesc = AppDesc.Text;
+          
             try
             {
+                int appId = Int32.Parse(AppID.Text);
+                string appName = AppName.Text;
+                string appVersion = AppVersion.Text;
+                string appDesc = AppDesc.Text;
+
                 if (selectedApp.ApplicationID == 0)
                 {
                     applications.InsertApplication(appName, appVersion, appDesc);
@@ -234,19 +178,28 @@ namespace BugTrackerGui
             catch (SqlException sqlex)
             {
                 DisplayErrorMessage(sqlex.Message);
+
+            }catch(Exception sqlex)
+            {
+                DisplayErrorMessage(sqlex.Message);
             }
-        
-        }
+
+        }//end Save_Application_Click
+
+        /// <summary>
+        /// this method will be used to delete the item based on selectedlist
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         private void Delete_Application_Click(object sender, EventArgs e)
         {
             Applications applications = new Applications();
             App selectedApp = (App)AppList.SelectedValue;
 
-            int appId = Int32.Parse(AppID.Text);
-
             try
             {
+                int appId = Int32.Parse(AppID.Text);
                 if (selectedApp.ApplicationID != 0)
                 {
                     applications.DeleteApplication(appId);
@@ -257,7 +210,189 @@ namespace BugTrackerGui
             {
                 DisplayErrorMessage(sqlex.Message);
             }
+            catch (Exception sqlex)
+            {
+                DisplayErrorMessage(sqlex.Message);
+            }
+        }//end Delete_Application_Click
+
+
+
+//--------------------------------------------------------------------------------------------------------------//
+//---------------------------------- Bugs Group ----------------------------------------------------------------//
+//--------------------------------------------------------------------------------------------------------------//
+        
+
+
+    
+//--------------------------------------------------------------------------------------------------------------//
+//---------------------------------- Users Group ---------------------------------------------------------------//
+//--------------------------------------------------------------------------------------------------------------//
+      
+        /// <summary>
+        /// This method will get the users list by executing stored Procedures and fills the list with user name
+        /// </summary>
+        private void LoadUsersList()
+        {
+            //creating new users object called users
+         
+             Users users = new Users();
+
+             List<User> user = users.GetUserList(); //creating a list of User by calling the Userlist method
+
+            user.Insert(0, new User()
+            {
+                UserName = "<Add New>" //adding new element in top of the user id
+            });
+
+            UserList.DataSource = user;
+            UserList.DisplayMember = "UserName"; //defining the memeber that i want to display
+
+        }//end load user list
+
+        /// <summary>
+        /// this method populates the user information based on the selected user
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UserList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            User selectedUser = (User)UserList.SelectedValue;
+
+            if (selectedUser.UserID!= 0)
+            {
+                UserID.Visible = true;
+
+                UserID.Text = selectedUser.UserID.ToString();
+                UserName.Text = selectedUser.UserName;
+                UserEmail.Text = selectedUser.UserEmail;
+                UserPhoneNum.Text = selectedUser.UserTel;
+
+            }
+            else
+            {
+              
+
+                UserID.Visible = false;
+                UserName.Clear();
+                UserEmail.Clear();
+                UserPhoneNum.Clear();
+            }
+
+        }//end  UserList_SelectedIndexChanged
+
+        /// <summary>
+        /// this method will save / update the user based on the selected id
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Save_User_Click(object sender, EventArgs e)
+        {
+            Users users = new Users();
+            User selectedUser = (User)UserList.SelectedValue;
+
+          
+            try
+            {
+                int userID = Int32.Parse(UserID.Text);
+                string userName = UserName.Text;
+                string userEmail = UserEmail.Text;
+                string userTel = UserPhoneNum.Text;
+
+                if (selectedUser.UserID == 0)
+                {
+                    users.InserUser(userName, userEmail, userTel);
+                }
+                else
+                {
+                    users.UpdateUser(userID, userName, userEmail, userTel);
+                }
+
+                LoadUsersList();
+
+            }catch(SqlException sqlex)
+            {
+                DisplayErrorMessage(sqlex.Message);
+            }
+            catch (Exception sqlex)
+            {
+                DisplayErrorMessage(sqlex.Message);
+            }
+        } //end Save_User_Click
+
+
+
+
+        private void Delete_User_Click(object sender, EventArgs e)
+        {
+            Users users = new Users();
+            User selectedUser = (User)UserList.SelectedValue;
+           
+
+            try
+            {
+                int userID = Int32.Parse(UserID.Text.ToString());
+
+                if (selectedUser.UserID != 0)
+                {
+                    users.DeleteUser(userID);
+                }
+                LoadUsersList();
+            }
+            catch (SqlException sqlex)
+            {
+                DisplayErrorMessage(sqlex.Message);
+            }
+            catch (Exception sqlex)
+            {
+                DisplayErrorMessage(sqlex.Message);
+            }
         }
+
+
+
+        //--------------------------------------------------------------------------------------------------------------//
+        //---------------------------------- Tabs Group and Dispaly Error ----------------------------------------------------------------//
+        //--------------------------------------------------------------------------------------------------------------//
+
+        /// <summary>
+        /// this method hides all the tabs when the programs loads
+        /// </summary>
+        private void HideTabs()
+    {
+        MenuBugTracker.TabPages.RemoveByKey("ApplicationsTab");
+        MenuBugTracker.TabPages.RemoveByKey("BugsTab");
+        MenuBugTracker.TabPages.RemoveByKey("UsersTab");
+
+    }//end hide tabs
+
+    /// <summary>
+    /// this methods shows all the tabs after the user confirmation is done
+    /// </summary>
+    private void ShowTabs()
+    {
+        MenuBugTracker.TabPages.Add(ApplicationsTab);
+        MenuBugTracker.TabPages.Add(BugsTab);
+        MenuBugTracker.TabPages.Add(UsersTab);
+
+    }//end show tabs
+
+
+
+    /// <summary>
+    /// this method is for dispalying the error 
+    /// </summary>
+    /// <param name="message"></param>
+    private void DisplayErrorMessage(string message)
+    {
+        MessageBox.Show(this,
+            message,
+            "Error",
+            MessageBoxButtons.OK,
+            MessageBoxIcon.Error);
+    }//end dispaly error msg
+
+       
     }//end main form gui
 
 }//end namespace 

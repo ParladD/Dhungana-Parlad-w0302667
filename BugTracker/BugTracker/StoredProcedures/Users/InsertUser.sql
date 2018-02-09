@@ -4,4 +4,4 @@
 	@UserTel varchar(40) 
 AS
 	INSERT INTO Users
-	VALUES(@UserEmail, @UserEmail, @UserTel);
+	VALUES(@UserName, @UserEmail, @UserTel);
