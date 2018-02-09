@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace BugTrackerDataLayer
 {
-    class Bugs
+    public class Bugs
     {
-         public List<Bug> GetBugList()
+        public List<Bug> GetBugList(int bugID)
         {
             List<Bug> bugs = new List<Bug>();
                 
@@ -174,7 +174,7 @@ namespace BugTrackerDataLayer
     }//end Bugs class
 
 
-    class Bug
+   public class Bug
     {
         public int BugID { get; set; }
         public int BugAppID { get; set; }

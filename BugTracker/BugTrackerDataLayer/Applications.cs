@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace BugTrackerDataLayer
 {
-    class Applications
+    public class Applications
     {
         /// <summary>
         /// this method will return all the application list
         /// </summary>
         /// <returns>apps, is the list of all the record on the Applicaiton Table</returns>
-        public List<Application> GetApplicationList()
+        public List<App> GetApplicationList()
         {
-            List<Application> apps = new List<Application>();
+            List<App> apps = new List<App>();
 
             using (SqlConnection connection = DB.GetSqlConnection())
             {
@@ -30,7 +30,7 @@ namespace BugTrackerDataLayer
 
                     while (reader.Read())
                     {
-                        Application app = new Application();
+                        App app = new App();
                         app.LoadApplication(reader);
                         apps.Add(app);
 
@@ -79,7 +79,7 @@ namespace BugTrackerDataLayer
             {
                 using (SqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = @"UpdateUser";
+                    command.CommandText = @"UpdateApplication";
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
                     //creating parameters
@@ -151,7 +151,7 @@ namespace BugTrackerDataLayer
 
 
 
-    public class Application
+    public class App
     {
         public int ApplicationID { get; set; }
         public string ApplicationName { get; set; }

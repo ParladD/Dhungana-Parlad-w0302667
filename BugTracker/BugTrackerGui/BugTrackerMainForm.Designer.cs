@@ -48,6 +48,7 @@
             this.lable8 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.BugsTab = new System.Windows.Forms.TabPage();
+            this.BugDataGrid = new System.Windows.Forms.DataGridView();
             this.Save_Bug = new System.Windows.Forms.Button();
             this.BugUpdateComment = new System.Windows.Forms.RichTextBox();
             this.label18 = new System.Windows.Forms.Label();
@@ -86,13 +87,12 @@
             this.label21 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
-            this.BugDataGrid = new System.Windows.Forms.DataGridView();
             this.MenuBugTracker.SuspendLayout();
             this.IdentifyTab.SuspendLayout();
             this.ApplicationsTab.SuspendLayout();
             this.BugsTab.SuspendLayout();
-            this.UsersTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BugDataGrid)).BeginInit();
+            this.UsersTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // MenuBugTracker
@@ -189,6 +189,7 @@
             this.Delete_Application.TabIndex = 11;
             this.Delete_Application.Text = "Delete";
             this.Delete_Application.UseVisualStyleBackColor = true;
+            this.Delete_Application.Click += new System.EventHandler(this.Delete_Application_Click);
             // 
             // AppList
             // 
@@ -199,6 +200,7 @@
             this.AppList.Name = "AppList";
             this.AppList.Size = new System.Drawing.Size(225, 277);
             this.AppList.TabIndex = 10;
+            this.AppList.SelectedIndexChanged += new System.EventHandler(this.AppList_SelectedIndexChanged);
             // 
             // Save_Application
             // 
@@ -208,6 +210,7 @@
             this.Save_Application.TabIndex = 9;
             this.Save_Application.Text = "Save";
             this.Save_Application.UseVisualStyleBackColor = true;
+            this.Save_Application.Click += new System.EventHandler(this.Save_Application_Click);
             // 
             // AppDesc
             // 
@@ -215,7 +218,6 @@
             this.AppDesc.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.AppDesc.Location = new System.Drawing.Point(316, 185);
             this.AppDesc.Name = "AppDesc";
-            this.AppDesc.ReadOnly = true;
             this.AppDesc.Size = new System.Drawing.Size(220, 183);
             this.AppDesc.TabIndex = 8;
             this.AppDesc.Text = "";
@@ -225,7 +227,6 @@
             this.AppVersion.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.AppVersion.Location = new System.Drawing.Point(315, 137);
             this.AppVersion.Name = "AppVersion";
-            this.AppVersion.ReadOnly = true;
             this.AppVersion.Size = new System.Drawing.Size(134, 20);
             this.AppVersion.TabIndex = 7;
             // 
@@ -234,7 +235,6 @@
             this.AppName.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.AppName.Location = new System.Drawing.Point(315, 99);
             this.AppName.Name = "AppName";
-            this.AppName.ReadOnly = true;
             this.AppName.Size = new System.Drawing.Size(222, 20);
             this.AppName.TabIndex = 6;
             // 
@@ -328,6 +328,14 @@
             this.BugsTab.TabIndex = 2;
             this.BugsTab.Text = "Bugs";
             this.BugsTab.UseVisualStyleBackColor = true;
+            // 
+            // BugDataGrid
+            // 
+            this.BugDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.BugDataGrid.Location = new System.Drawing.Point(712, 50);
+            this.BugDataGrid.Name = "BugDataGrid";
+            this.BugDataGrid.Size = new System.Drawing.Size(260, 194);
+            this.BugDataGrid.TabIndex = 25;
             // 
             // Save_Bug
             // 
@@ -574,8 +582,6 @@
             // UserList
             // 
             this.UserList.FormattingEnabled = true;
-            this.UserList.Items.AddRange(new object[] {
-            "<Add New>"});
             this.UserList.Location = new System.Drawing.Point(661, 95);
             this.UserList.Name = "UserList";
             this.UserList.Size = new System.Drawing.Size(223, 238);
@@ -665,14 +671,6 @@
             this.label19.TabIndex = 0;
             this.label19.Text = "User Manager";
             // 
-            // BugDataGrid
-            // 
-            this.BugDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.BugDataGrid.Location = new System.Drawing.Point(712, 50);
-            this.BugDataGrid.Name = "BugDataGrid";
-            this.BugDataGrid.Size = new System.Drawing.Size(260, 194);
-            this.BugDataGrid.TabIndex = 25;
-            // 
             // BugTrackerMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -689,9 +687,9 @@
             this.ApplicationsTab.PerformLayout();
             this.BugsTab.ResumeLayout(false);
             this.BugsTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BugDataGrid)).EndInit();
             this.UsersTab.ResumeLayout(false);
             this.UsersTab.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BugDataGrid)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -709,13 +707,10 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lable8;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox AppVersion;
-        private System.Windows.Forms.TextBox AppName;
         private System.Windows.Forms.TextBox AppID;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.RichTextBox AppDesc;
         private System.Windows.Forms.Button Delete_Application;
         private System.Windows.Forms.ListBox AppList;
         private System.Windows.Forms.Button Save_Application;
@@ -757,6 +752,9 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.DataGridView BugDataGrid;
+        protected System.Windows.Forms.TextBox AppVersion;
+        protected System.Windows.Forms.TextBox AppName;
+        protected System.Windows.Forms.RichTextBox AppDesc;
     }
 }
 

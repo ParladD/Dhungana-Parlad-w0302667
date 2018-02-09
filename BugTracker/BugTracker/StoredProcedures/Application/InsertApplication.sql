@@ -5,4 +5,4 @@
 AS
 	
 	INSERT INTO Applications
-	VALUES(@AppDesc, @AppVersion, @AppDesc);
+	VALUES(@AppName, @AppVersion, @AppDesc);
