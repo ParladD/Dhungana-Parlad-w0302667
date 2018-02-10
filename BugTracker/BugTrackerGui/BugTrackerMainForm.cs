@@ -13,7 +13,8 @@ namespace BugTrackerGui
     public partial class BugTrackerMainForm : Form
     {
         private string applicationName;
-
+        private int bugAppID = 0;
+        private int bugStatusID = 0;
         public BugTrackerMainForm()
         {
             InitializeComponent();
@@ -34,8 +35,9 @@ namespace BugTrackerGui
                 // Loading the Application List
                 LoadApplicationList();
                 LoadUsersList();
-            
-
+                BugAppListData();
+                BugStatusData();
+                LoadBugList();
             }
             catch (SqlException sqlex)
             {
@@ -65,28 +67,6 @@ namespace BugTrackerGui
 
         }//end button logon click
 
-
-
-        private void LoadBugList()
-        {
-            //creating new users object called users
-
-            Bugs bugs = new Bugs();
-
-            List<Bug> bug = bugs.GetBugList(1); //creating a list of bugs by calling the GetApplicationList method
-
-            bug.Insert(0, new Bug()
-            {
-                BugDesc = "<Add New>"//adding new element in top of the bugs id
-            });
-
-            BugListBox.DataSource = bug;
-            BugListBox.DisplayMember = "BugDesc"; //defining the memeber that i want to display
-
-        }//end load user list
-
-
-     
 
 
 //--------------------------------------------------------------------------------------------------------------//
@@ -221,14 +201,154 @@ namespace BugTrackerGui
 //--------------------------------------------------------------------------------------------------------------//
 //---------------------------------- Bugs Group ----------------------------------------------------------------//
 //--------------------------------------------------------------------------------------------------------------//
-        
+       
+        private void LoadBugList()
+        {
+            //creating new users object called users
+
+            Bugs bugs = new Bugs();
+
+            List<Bug> bug = bugs.GetBugList(bugAppID, bugStatusID); //creating a list of bugs by calling the GetApplicationList method
+
+            bug.Insert(0, new Bug()
+            {
+                BugDesc = "<Add New>",//adding new element in top of the bugs id
+              
+            
+            });
+
+            BugListBox.DataSource = bug;
+            BugListBox.DisplayMember = "BugDesc"; //defining the memeber that i want to display
+
+        }//end load user list
+            
+
+        private void BugAppListData()
+        {
+            Applications applications = new Applications();
+
+            List<App> app = applications.GetApplicationList(); //creating a list of applications by calling the GetApplicationList method
+
+            app.Insert(0, new App()
+            {
+                ApplicationName = "<Select Application>"//adding new element in top of the app id
+            });
+            BugAppList.DataSource = app;
+            BugAppList.DisplayMember = "ApplicationName";
+        }
+
+        private void BugStatusData()
+        {
+            StatusCodes statusCodes = new StatusCodes();
+
+            List<StatusCode> stat = statusCodes.GetStatusCodeList(); //creating a list of applications by calling the GetApplicationList method
+
+            stat.Insert(0, new StatusCode()
+            {
+                 StatusCodeDescription= "<Select Status>"//adding new element in top of the app id
+            });
+            BugStatusList.DataSource = stat;
+            BugStatusList.DisplayMember = "StatusCodeDescription";
+        }
 
 
-    
-//--------------------------------------------------------------------------------------------------------------//
-//---------------------------------- Users Group ---------------------------------------------------------------//
-//--------------------------------------------------------------------------------------------------------------//
-      
+        private void BugAppList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           
+            App selectedApp = (App)BugAppList.SelectedValue;
+   
+            try
+            {
+                bugAppID = selectedApp.ApplicationID;
+
+                if (bugAppID != 0)
+                {
+                    LoadBugList();
+
+                }
+               
+            }
+            catch (SqlException sqlex)
+            {
+                DisplayErrorMessage(sqlex.Message);
+            }
+           
+            catch (Exception sqlex)
+            {
+                DisplayErrorMessage(sqlex.Message );
+            }
+        }
+
+        private void BugStatusList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            StatusCode status  = (StatusCode)BugStatusList.SelectedValue;
+
+            try
+            {
+                bugStatusID = status.StatusCodeID;
+
+                if (bugStatusID != 0)
+                {
+                    LoadBugList();
+
+                }
+
+            }
+            catch (SqlException sqlex)
+            {
+                DisplayErrorMessage(sqlex.Message);
+            }
+
+            catch (Exception sqlex)
+            {
+                DisplayErrorMessage(sqlex.Message);
+            }
+        }
+
+
+        private void BugListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Bugs bugs = new Bugs();
+            Bug bug = (Bug)BugListBox.SelectedValue;
+            try
+            {
+                int bugID = bug.BugID;
+
+                if (bugID != 0)
+                {
+                    bugs.GetBug(bugID);
+
+                    BugID.Text = bug.BugID.ToString();
+                }
+            }
+            catch (SqlException sqlex)
+            {
+                DisplayErrorMessage(sqlex.Message);
+            }
+
+            catch (Exception sqlex)
+            {
+                DisplayErrorMessage(sqlex.Message);
+            }
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        //--------------------------------------------------------------------------------------------------------------//
+        //---------------------------------- Users Group ---------------------------------------------------------------//
+        //--------------------------------------------------------------------------------------------------------------//
+
         /// <summary>
         /// This method will get the users list by executing stored Procedures and fills the list with user name
         /// </summary>
@@ -392,7 +512,7 @@ namespace BugTrackerGui
             MessageBoxIcon.Error);
     }//end dispaly error msg
 
-       
+        
     }//end main form gui
 
 }//end namespace 

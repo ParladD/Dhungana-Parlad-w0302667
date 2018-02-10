@@ -419,9 +419,11 @@
             // 
             // BugID
             // 
+            this.BugID.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.BugID.Location = new System.Drawing.Point(469, 22);
             this.BugID.Name = "BugID";
-            this.BugID.Size = new System.Drawing.Size(114, 20);
+            this.BugID.ReadOnly = true;
+            this.BugID.Size = new System.Drawing.Size(114, 13);
             this.BugID.TabIndex = 14;
             // 
             // label16
@@ -505,22 +507,25 @@
             this.BugListBox.Name = "BugListBox";
             this.BugListBox.Size = new System.Drawing.Size(306, 212);
             this.BugListBox.TabIndex = 5;
+            this.BugListBox.SelectedIndexChanged += new System.EventHandler(this.BugListBox_SelectedIndexChanged);
             // 
             // BugStatusList
             // 
             this.BugStatusList.FormattingEnabled = true;
             this.BugStatusList.Location = new System.Drawing.Point(150, 78);
             this.BugStatusList.Name = "BugStatusList";
-            this.BugStatusList.Size = new System.Drawing.Size(170, 21);
+            this.BugStatusList.Size = new System.Drawing.Size(184, 21);
             this.BugStatusList.TabIndex = 4;
+            this.BugStatusList.SelectedIndexChanged += new System.EventHandler(this.BugStatusList_SelectedIndexChanged);
             // 
             // BugAppList
             // 
             this.BugAppList.FormattingEnabled = true;
-            this.BugAppList.Location = new System.Drawing.Point(150, 26);
+            this.BugAppList.Location = new System.Drawing.Point(132, 26);
             this.BugAppList.Name = "BugAppList";
-            this.BugAppList.Size = new System.Drawing.Size(170, 21);
+            this.BugAppList.Size = new System.Drawing.Size(202, 21);
             this.BugAppList.TabIndex = 3;
+            this.BugAppList.SelectedIndexChanged += new System.EventHandler(this.BugAppList_SelectedIndexChanged);
             // 
             // label9
             // 
@@ -625,6 +630,7 @@
             this.UserID.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.UserID.Location = new System.Drawing.Point(280, 95);
             this.UserID.Name = "UserID";
+            this.UserID.ReadOnly = true;
             this.UserID.Size = new System.Drawing.Size(137, 13);
             this.UserID.TabIndex = 5;
             // 

@@ -9,7 +9,63 @@ namespace BugTrackerDataLayer
 {
     public class Bugs
     {
-        public List<Bug> GetBugList(int bugID)
+
+
+        public List<Bug> GetBugList(int AppID, int StatID)
+        {
+            List<Bug> bugs = new List<Bug>();
+
+            using (SqlConnection connection = DB.GetSqlConnection())
+            {
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = @"GetBugList";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    SqlParameter parameter_AppID = new SqlParameter("AppID", System.Data.SqlDbType.Int);
+                    parameter_AppID.Value = AppID;
+                    command.Parameters.Add(parameter_AppID);
+
+                    SqlParameter parameter_StatID = new SqlParameter("Status", System.Data.SqlDbType.Int);
+                    parameter_StatID.Value = StatID;
+                    command.Parameters.Add(parameter_StatID);
+
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Bug b = new Bug();
+                        b.LoadBugList(reader);
+                        bugs.Add(b);
+                    }
+                }
+            }
+
+
+            return bugs;
+        }//end getBug
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public List<Bug> GetBug(int bugID)
         {
             List<Bug> bugs = new List<Bug>();
                 
@@ -19,6 +75,10 @@ namespace BugTrackerDataLayer
                 {
                     command.CommandText = @"GetBug";
                     command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    SqlParameter parameter_BugID = new SqlParameter("BugID", System.Data.SqlDbType.Int);
+                    parameter_BugID.Value = bugID;
+                    command.Parameters.Add(parameter_BugID);
 
                     SqlDataReader reader = command.ExecuteReader();
 
@@ -180,25 +240,33 @@ namespace BugTrackerDataLayer
         public int BugAppID { get; set; }
         public int BugUserID { get; set; }
         public int BugSignOff { get; set; }
-        public DateTime BugDate { get; set; }
+        public DateTime BugLogDate { get; set; }
         public string BugDesc { get; set; }
         public string BugDetails { get; set; }
         public string BugRepSteps { get; set; }
         public DateTime BugFixDate { get; set; }
 
 
-        public void LoadBug(SqlDataReader reader)
+        public void LoadBugList(SqlDataReader reader)
         {
             BugID = Int32.Parse(reader["BugID"].ToString());
             BugAppID = Int32.Parse(reader["AppID"].ToString());
-            BugUserID = Int32.Parse(reader["UserID"].ToString());
-            BugSignOff = Int32.Parse(reader["BugSignOff"].ToString());
-            BugDate = DateTime.Parse(reader["BugDate"].ToString());
+            BugUserID = Int32.Parse(reader["UserID"].ToString()); 
             BugDesc = reader["BugDesc"].ToString();
+       
+        }
+
+        public void LoadBug(SqlDataReader reader)
+        {
+            LoadBugList(reader);
+            BugSignOff = Int32.Parse(reader["BugSignOff"].ToString());
+            BugLogDate = DateTime.Parse(reader["BugLogDate"].ToString());
             BugDetails = reader["BugDetails"].ToString();
             BugRepSteps = reader["RepSteps"].ToString();
             BugFixDate = DateTime.Parse(reader["FixDate"].ToString());
         }
+
+
 
     }//end Bug
 

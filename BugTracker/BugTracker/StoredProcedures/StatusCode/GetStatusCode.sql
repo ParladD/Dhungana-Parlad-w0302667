@@ -2,5 +2,5 @@
 	
 AS
 	SELECT StatusCodeID, StatusCodeDesc 
-	FROM statusCodes;
+	FROM StatusCodes;
 

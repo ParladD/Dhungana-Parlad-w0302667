@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BugTrackerDataLayer
 {
-    class StatusCodes
+   public class StatusCodes
     {
 
         public List <StatusCode> GetStatusCodeList()
