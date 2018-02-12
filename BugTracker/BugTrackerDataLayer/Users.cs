@@ -34,11 +34,11 @@ namespace BugTrackerDataLayer
                     command.Parameters.Add(Parameter_UserName);
 
                     SqlParameter Parameter_Exists= new SqlParameter("Exits", System.Data.SqlDbType.Bit, 1);
-                 
                     Parameter_Exists.Direction = System.Data.ParameterDirection.Output;
                     command.Parameters.Add(Parameter_Exists);
 
                     command.ExecuteNonQuery();
+                  
 
                     check = (bool)command.Parameters["Exits"].Value;
                 }

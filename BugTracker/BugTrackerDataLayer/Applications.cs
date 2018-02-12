@@ -93,7 +93,7 @@ namespace BugTrackerDataLayer
                     command.Parameters.Add(parameter_AppName);
 
                     SqlParameter parameter_AppVersion = new SqlParameter("AppVersion", System.Data.SqlDbType.VarChar, 40);
-                    parameter_AppVersion.Value = AppVersion;
+                    parameter_AppVersion.Value = AppVersion; 
                     command.Parameters.Add(parameter_AppVersion);
 
                     SqlParameter parameter_AppDesc = new SqlParameter("AppDesc", System.Data.SqlDbType.VarChar, 255);

@@ -54,8 +54,6 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.BugStatus = new System.Windows.Forms.ComboBox();
-            this.BugRepSteps = new System.Windows.Forms.RichTextBox();
-            this.BugDetails = new System.Windows.Forms.RichTextBox();
             this.BugFixDate = new System.Windows.Forms.TextBox();
             this.BugSubmitDate = new System.Windows.Forms.TextBox();
             this.BugDesc = new System.Windows.Forms.TextBox();
@@ -74,6 +72,8 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.bugDetail = new System.Windows.Forms.TextBox();
+            this.bugRepStep = new System.Windows.Forms.TextBox();
             this.UsersTab = new System.Windows.Forms.TabPage();
             this.Delete_User = new System.Windows.Forms.Button();
             this.UserList = new System.Windows.Forms.ListBox();
@@ -105,7 +105,7 @@
             this.MenuBugTracker.Location = new System.Drawing.Point(8, 7);
             this.MenuBugTracker.Name = "MenuBugTracker";
             this.MenuBugTracker.SelectedIndex = 0;
-            this.MenuBugTracker.Size = new System.Drawing.Size(997, 466);
+            this.MenuBugTracker.Size = new System.Drawing.Size(1060, 466);
             this.MenuBugTracker.TabIndex = 1;
             // 
             // IdentifyTab
@@ -118,7 +118,7 @@
             this.IdentifyTab.Location = new System.Drawing.Point(4, 23);
             this.IdentifyTab.Name = "IdentifyTab";
             this.IdentifyTab.Padding = new System.Windows.Forms.Padding(3);
-            this.IdentifyTab.Size = new System.Drawing.Size(989, 439);
+            this.IdentifyTab.Size = new System.Drawing.Size(1052, 439);
             this.IdentifyTab.TabIndex = 0;
             this.IdentifyTab.Text = "Identify";
             // 
@@ -176,7 +176,7 @@
             this.ApplicationsTab.Location = new System.Drawing.Point(4, 23);
             this.ApplicationsTab.Name = "ApplicationsTab";
             this.ApplicationsTab.Padding = new System.Windows.Forms.Padding(3);
-            this.ApplicationsTab.Size = new System.Drawing.Size(989, 439);
+            this.ApplicationsTab.Size = new System.Drawing.Size(1052, 439);
             this.ApplicationsTab.TabIndex = 1;
             this.ApplicationsTab.Text = "Applications";
             this.ApplicationsTab.UseVisualStyleBackColor = true;
@@ -302,8 +302,6 @@
             this.BugsTab.Controls.Add(this.label18);
             this.BugsTab.Controls.Add(this.label17);
             this.BugsTab.Controls.Add(this.BugStatus);
-            this.BugsTab.Controls.Add(this.BugRepSteps);
-            this.BugsTab.Controls.Add(this.BugDetails);
             this.BugsTab.Controls.Add(this.BugFixDate);
             this.BugsTab.Controls.Add(this.BugSubmitDate);
             this.BugsTab.Controls.Add(this.BugDesc);
@@ -322,9 +320,11 @@
             this.BugsTab.Controls.Add(this.label9);
             this.BugsTab.Controls.Add(this.label8);
             this.BugsTab.Controls.Add(this.label7);
+            this.BugsTab.Controls.Add(this.bugDetail);
+            this.BugsTab.Controls.Add(this.bugRepStep);
             this.BugsTab.Location = new System.Drawing.Point(4, 23);
             this.BugsTab.Name = "BugsTab";
-            this.BugsTab.Size = new System.Drawing.Size(989, 439);
+            this.BugsTab.Size = new System.Drawing.Size(1052, 439);
             this.BugsTab.TabIndex = 2;
             this.BugsTab.Text = "Bugs";
             this.BugsTab.UseVisualStyleBackColor = true;
@@ -334,7 +334,7 @@
             this.BugDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.BugDataGrid.Location = new System.Drawing.Point(712, 50);
             this.BugDataGrid.Name = "BugDataGrid";
-            this.BugDataGrid.Size = new System.Drawing.Size(260, 194);
+            this.BugDataGrid.Size = new System.Drawing.Size(329, 143);
             this.BugDataGrid.TabIndex = 25;
             // 
             // Save_Bug
@@ -345,6 +345,7 @@
             this.Save_Bug.TabIndex = 24;
             this.Save_Bug.Text = "Save ";
             this.Save_Bug.UseVisualStyleBackColor = true;
+            this.Save_Bug.Click += new System.EventHandler(this.Save_Bug_Click);
             // 
             // BugUpdateComment
             // 
@@ -380,34 +381,18 @@
             this.BugStatus.Size = new System.Drawing.Size(199, 21);
             this.BugStatus.TabIndex = 20;
             // 
-            // BugRepSteps
-            // 
-            this.BugRepSteps.Location = new System.Drawing.Point(469, 232);
-            this.BugRepSteps.Name = "BugRepSteps";
-            this.BugRepSteps.Size = new System.Drawing.Size(199, 76);
-            this.BugRepSteps.TabIndex = 19;
-            this.BugRepSteps.Text = "";
-            // 
-            // BugDetails
-            // 
-            this.BugDetails.Location = new System.Drawing.Point(469, 135);
-            this.BugDetails.Name = "BugDetails";
-            this.BugDetails.Size = new System.Drawing.Size(199, 79);
-            this.BugDetails.TabIndex = 18;
-            this.BugDetails.Text = "";
-            // 
             // BugFixDate
             // 
             this.BugFixDate.Location = new System.Drawing.Point(469, 365);
             this.BugFixDate.Name = "BugFixDate";
-            this.BugFixDate.Size = new System.Drawing.Size(142, 20);
+            this.BugFixDate.Size = new System.Drawing.Size(199, 20);
             this.BugFixDate.TabIndex = 17;
             // 
             // BugSubmitDate
             // 
             this.BugSubmitDate.Location = new System.Drawing.Point(469, 56);
             this.BugSubmitDate.Name = "BugSubmitDate";
-            this.BugSubmitDate.Size = new System.Drawing.Size(153, 20);
+            this.BugSubmitDate.Size = new System.Drawing.Size(199, 20);
             this.BugSubmitDate.TabIndex = 16;
             // 
             // BugDesc
@@ -554,6 +539,23 @@
             this.label7.TabIndex = 0;
             this.label7.Text = "Application:";
             // 
+            // bugDetail
+            // 
+            this.bugDetail.Location = new System.Drawing.Point(471, 135);
+            this.bugDetail.Multiline = true;
+            this.bugDetail.Name = "bugDetail";
+            this.bugDetail.Size = new System.Drawing.Size(197, 80);
+            this.bugDetail.TabIndex = 26;
+            // 
+            // bugRepStep
+            // 
+            this.bugRepStep.Location = new System.Drawing.Point(469, 232);
+            this.bugRepStep.Multiline = true;
+            this.bugRepStep.Name = "bugRepStep";
+            this.bugRepStep.Size = new System.Drawing.Size(197, 80);
+            this.bugRepStep.TabIndex = 27;
+            this.bugRepStep.Text = "why";
+            // 
             // UsersTab
             // 
             this.UsersTab.Controls.Add(this.Delete_User);
@@ -570,7 +572,7 @@
             this.UsersTab.Controls.Add(this.label19);
             this.UsersTab.Location = new System.Drawing.Point(4, 23);
             this.UsersTab.Name = "UsersTab";
-            this.UsersTab.Size = new System.Drawing.Size(989, 439);
+            this.UsersTab.Size = new System.Drawing.Size(1052, 439);
             this.UsersTab.TabIndex = 3;
             this.UsersTab.Text = "Users";
             this.UsersTab.UseVisualStyleBackColor = true;
@@ -684,7 +686,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1006, 473);
+            this.ClientSize = new System.Drawing.Size(1065, 470);
             this.Controls.Add(this.MenuBugTracker);
             this.Name = "BugTrackerMainForm";
             this.Text = "Bug Tracker";
@@ -727,8 +729,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox BugStatus;
-        private System.Windows.Forms.RichTextBox BugRepSteps;
-        private System.Windows.Forms.RichTextBox BugDetails;
         private System.Windows.Forms.TextBox BugFixDate;
         private System.Windows.Forms.TextBox BugSubmitDate;
         private System.Windows.Forms.TextBox BugDesc;
@@ -764,6 +764,8 @@
         protected System.Windows.Forms.TextBox AppVersion;
         protected System.Windows.Forms.TextBox AppName;
         protected System.Windows.Forms.RichTextBox AppDesc;
+        private System.Windows.Forms.TextBox bugRepStep;
+        private System.Windows.Forms.TextBox bugDetail;
     }
 }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -44,22 +45,6 @@ namespace BugTrackerDataLayer
 
             return bugs;
         }//end getBug
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -231,19 +216,55 @@ namespace BugTrackerDataLayer
         }
 
 
+
+        public static System.Data.DataTable GetLog(int bugid)
+        {
+            DataTable table = new DataTable("BugLog");
+
+            SqlDataAdapter dataAdapter = null;
+
+            using (SqlConnection connection = DB.GetSqlConnection())
+            {
+
+                using (SqlCommand command = connection.CreateCommand())
+
+                {
+
+                    command.CommandText = @"DataTableProcedure";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+
+                    SqlParameter parameter_bugid = new SqlParameter("bugId", SqlDbType.Int);
+                    parameter_bugid.Value = bugid;
+                    command.Parameters.Add(parameter_bugid);
+
+                    command.ExecuteNonQuery();
+                    using (dataAdapter = new SqlDataAdapter(command))
+                    {
+                        int result = dataAdapter.Fill(table);
+                    }
+
+                }
+            }
+       
+            return table;
+        }
+
+
+
     }//end Bugs class
 
 
-   public class Bug
+    public class Bug
     {
         public int BugID { get; set; }
         public int BugAppID { get; set; }
         public int BugUserID { get; set; }
         public int BugSignOff { get; set; }
-        public DateTime BugLogDate { get; set; }
+        public DateTime BugDate { get; set; }
         public string BugDesc { get; set; }
-        public string BugDetails { get; set; }
-        public string BugRepSteps { get; set; }
+        public string BugDetailInfo { get; set; }
+        public string BugRepStepInfo { get; set; }
         public DateTime BugFixDate { get; set; }
 
 
@@ -256,16 +277,16 @@ namespace BugTrackerDataLayer
        
         }
 
-        public void LoadBug(SqlDataReader reader)
+    
+         public void LoadBug(SqlDataReader reader)
         {
             LoadBugList(reader);
-            BugSignOff = Int32.Parse(reader["BugSignOff"].ToString());
-            BugLogDate = DateTime.Parse(reader["BugLogDate"].ToString());
-            BugDetails = reader["BugDetails"].ToString();
-            BugRepSteps = reader["RepSteps"].ToString();
+            BugDetailInfo = reader["BugDetails"].ToString();
+            BugRepStepInfo = reader["RepSteps"].ToString();
+            BugDate = DateTime.Parse(reader["BugDate"].ToString());
             BugFixDate = DateTime.Parse(reader["FixDate"].ToString());
+           
         }
-
 
 
     }//end Bug

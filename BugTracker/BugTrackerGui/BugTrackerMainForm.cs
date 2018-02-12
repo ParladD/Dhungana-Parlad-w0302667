@@ -15,6 +15,8 @@ namespace BugTrackerGui
         private string applicationName;
         private int bugAppID = 0;
         private int bugStatusID = 0;
+        private int userid = 0;
+        private int statid = 0;
         public BugTrackerMainForm()
         {
             InitializeComponent();
@@ -36,8 +38,13 @@ namespace BugTrackerGui
                 LoadApplicationList();
                 LoadUsersList();
                 BugAppListData();
-                BugStatusData();
+                BugStatusData(BugStatusList);
+                BugStatusData(BugStatus);
                 LoadBugList();
+
+                ///disabling the status until new is clicked
+                ///
+                BugStatus.Enabled = false;
             }
             catch (SqlException sqlex)
             {
@@ -55,10 +62,11 @@ namespace BugTrackerGui
         private void Button_Logon_Click(object sender, EventArgs e)
         {
             Users users = new Users();
-
             if (users.GetUserConfirmation(UserNameInput.Text.ToString()))
             {//checking if the users exists in the database
                 ShowTabs();
+              
+                bugDetail.Text = userid.ToString();
             }
             else
             { //will be printing the error msg
@@ -237,7 +245,7 @@ namespace BugTrackerGui
             BugAppList.DisplayMember = "ApplicationName";
         }
 
-        private void BugStatusData()
+        private void BugStatusData(ComboBox c)
         {
             StatusCodes statusCodes = new StatusCodes();
 
@@ -247,8 +255,8 @@ namespace BugTrackerGui
             {
                  StatusCodeDescription= "<Select Status>"//adding new element in top of the app id
             });
-            BugStatusList.DataSource = stat;
-            BugStatusList.DisplayMember = "StatusCodeDescription";
+            c.DataSource = stat;
+            c.DisplayMember = "StatusCodeDescription";
         }
 
 
@@ -316,9 +324,28 @@ namespace BugTrackerGui
 
                 if (bugID != 0)
                 {
+                    BugID.Visible = true;
                     bugs.GetBug(bugID);
 
-                    BugID.Text = bug.BugID.ToString();
+                    BugID.Text = bugID.ToString();
+                    BugSubmitDate.Text = bug.BugDate.ToString();
+                    BugDesc.Text = bug.BugDesc;
+                    bugDetail.Text = bug.BugDetailInfo;
+                    bugRepStep.Text = bug.BugRepStepInfo;
+                    BugFixDate.Text = bug.BugFixDate.ToString();
+
+                    DataTable logTable = Bugs.GetLog(bugID);
+                    BugDataGrid.DataSource = logTable;
+
+                }
+                else
+                {
+                    BugID.Visible = false;
+                    BugSubmitDate.Clear();
+                    BugDesc.Clear();
+                    bugDetail.Clear();
+                    bugRepStep.Clear();
+                    BugFixDate.Clear();
                 }
             }
             catch (SqlException sqlex)
@@ -335,7 +362,43 @@ namespace BugTrackerGui
         }
 
 
+        private void Save_Bug_Click(object sender, EventArgs e)
+        {
+            Bugs bugs = new Bugs();
+            Bug bug = (Bug)BugListBox.SelectedValue;
 
+            try
+            {
+                int bugID = bug.BugID;
+                //int userID = 
+                //int AppID = 
+                DateTime bugSubmitDate = DateTime.Parse(BugSubmitDate.Text.ToString());
+                string bugDesc = BugDesc.Text;
+                string bugDetails = bugDetail.Text;
+                string bugRepSteps = bugRepStep.Text;
+                DateTime bugFixDate = DateTime.Parse(BugFixDate.Text.ToString());
+
+
+                if (bug.BugID == 0) {
+
+                    BugStatus.Enabled = true;
+
+
+                }
+
+            }
+            catch (SqlException sqlex)
+            {
+                DisplayErrorMessage(sqlex.Message);
+            }
+
+            catch (Exception sqlex)
+            {
+                DisplayErrorMessage(sqlex.Message);
+            }
+
+
+        }
 
 
 
@@ -512,7 +575,7 @@ namespace BugTrackerGui
             MessageBoxIcon.Error);
     }//end dispaly error msg
 
-        
+      
     }//end main form gui
 
 }//end namespace 
