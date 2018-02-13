@@ -8,7 +8,7 @@
     [BugDesc] VARCHAR(40) NOT NULL, 
     [BugDetails] NTEXT NOT NULL, 
     [RepSteps] NTEXT NOT NULL, 
-    [FixDate] DATETIME NOT NULL, 
+    [FixDate] DATETIME NULL, 
     CONSTRAINT [PK_Applications] FOREIGN KEY (AppID) REFERENCES Applications(AppID), 
     CONSTRAINT [PK_Users] FOREIGN KEY (UserID) REFERENCES Users(UserID),
 	CONSTRAINT [IdxUserName] FOREIGN KEY (BugSignOff) REFERENCES Users(UserID) 

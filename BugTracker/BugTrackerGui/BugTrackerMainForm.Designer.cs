@@ -380,6 +380,7 @@
             this.BugStatus.Name = "BugStatus";
             this.BugStatus.Size = new System.Drawing.Size(199, 21);
             this.BugStatus.TabIndex = 20;
+            this.BugStatus.SelectedIndexChanged += new System.EventHandler(this.BugStatus_SelectedIndexChanged);
             // 
             // BugFixDate
             // 
@@ -554,7 +555,6 @@
             this.bugRepStep.Name = "bugRepStep";
             this.bugRepStep.Size = new System.Drawing.Size(197, 80);
             this.bugRepStep.TabIndex = 27;
-            this.bugRepStep.Text = "why";
             // 
             // UsersTab
             // 

@@ -12,7 +12,9 @@ namespace BugTrackerDataLayer
     public class DB
     {
 
-
+        /// <summary>
+        /// this method will configure the connectiong string to make nesscasry connection
+        /// </summary>
         public static string ConnectionString
         {
             get{
@@ -27,6 +29,10 @@ namespace BugTrackerDataLayer
 
 
         }
+        /// <summary>
+        /// this methods returns sqlConnection 
+        /// </summary>
+        /// <returns>returns connection</returns>
 
         public static SqlConnection GetSqlConnection()
         {

@@ -33,8 +33,6 @@ namespace BugTrackerDataLayer
                         App app = new App();
                         app.LoadApplication(reader);
                         apps.Add(app);
-
-
                    
                     }
 
@@ -44,6 +42,10 @@ namespace BugTrackerDataLayer
             return apps;
         }//end getapplicationlist
 
+        /// <summary>
+        /// this method will be used to delete the application
+        /// </summary>
+        /// <param name="AppID">application id</param>
         public void DeleteApplication(int AppID)
         {
             using (SqlConnection connection = DB.GetSqlConnection())
@@ -69,10 +71,10 @@ namespace BugTrackerDataLayer
         /// <summary>
         /// this method will update the the user id of the 
         /// </summary>
-        /// <param name="AppID"></param>
-        /// <param name="AppName"></param>
-        /// <param name="AppVersion"></param>
-        /// <param name="AppDesc"></param>
+        /// <param name="AppID">Apllicaiton id</param>
+        /// <param name="AppName">application name</param>
+        /// <param name="AppVersion">application version</param>
+        /// <param name="AppDesc">application Desc</param>
         public void UpdateApplication(int AppID, string AppName, string AppVersion, string AppDesc)
         {
             using (SqlConnection connection = DB.GetSqlConnection())
@@ -109,11 +111,11 @@ namespace BugTrackerDataLayer
 
 
         /// <summary>
-        /// 
+        /// this method will be used to insert the apllication data
         /// </summary>
-        /// <param name="AppName"></param>
-        /// <param name="AppVersion"></param>
-        /// <param name="AppDesc"></param>
+        /// <param name="AppName">application name</param>
+        /// <param name="AppVersion">application version</param>
+        /// <param name="AppDesc">application Desc</param>
 
         public void InsertApplication(string AppName, string AppVersion, string AppDesc)
         {
@@ -153,9 +155,21 @@ namespace BugTrackerDataLayer
 
     public class App
     {
+        /// <summary>
+        /// gets and sets the Application ID
+        /// </summary>
         public int ApplicationID { get; set; }
+        /// <summary>
+        /// gets and sets the Application Name
+        /// </summary>
         public string ApplicationName { get; set; }
+        /// <summary>
+        /// gets and sets the Application Version
+        /// </summary>
         public string ApplicationVersion { get; set; }
+        /// <summary>
+        /// gets and sets the Application Description
+        /// </summary>
         public string ApplicationDescription { get; set; }
 
         /// <summary>

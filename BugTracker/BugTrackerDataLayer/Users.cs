@@ -10,17 +10,16 @@ namespace BugTrackerDataLayer
    public class Users
     {
 
-        private bool check;
+        private int check;
 
         /// <summary>
         /// this will check if the user exists in the database for logon
         /// </summary>
-        /// <param name="UserID"></param>
+        /// <param name="UserID">user id </param>
         /// <returns>if the uses exits than it will return all the detials about the user</returns>
-        public bool GetUserConfirmation(string UserName)
+        public int GetUserConfirmation(string UserName)
         {
 
-         
             using (SqlConnection connection = DB.GetSqlConnection())
             {
                 using (SqlCommand command = connection.CreateCommand())
@@ -33,14 +32,15 @@ namespace BugTrackerDataLayer
                     Parameter_UserName.Value = UserName;
                     command.Parameters.Add(Parameter_UserName);
 
-                    SqlParameter Parameter_Exists= new SqlParameter("Exits", System.Data.SqlDbType.Bit, 1);
+                    SqlParameter Parameter_Exists= new SqlParameter("Exits", System.Data.SqlDbType.Int, 1);
                     Parameter_Exists.Direction = System.Data.ParameterDirection.Output;
                     command.Parameters.Add(Parameter_Exists);
 
                     command.ExecuteNonQuery();
                   
 
-                    check = (bool)command.Parameters["Exits"].Value;
+
+                    check = (int)command.Parameters["Exits"].Value; //returns true or false based on the output value
                 }
 
             }
@@ -178,7 +178,7 @@ namespace BugTrackerDataLayer
                     command.Parameters.Add(parameter_UserName);
 
                     SqlParameter parameter_UserEmail = new SqlParameter("UserEmail", System.Data.SqlDbType.VarChar, 80);
-                    parameter_UserEmail.Value = UserName;
+                    parameter_UserEmail.Value = UserEmail;
                     command.Parameters.Add(parameter_UserEmail);
 
                     SqlParameter parameter_UserTel = new SqlParameter("UserTel", System.Data.SqlDbType.VarChar, 40);
@@ -189,19 +189,35 @@ namespace BugTrackerDataLayer
                     command.ExecuteNonQuery();
                 }
             }
-        }
+        }//end insert user
+
 
 
     }//end of the Users class
 
     public class User
     {
-
+        /// <summary>
+        /// gets and sets the UserID
+        /// </summary>
         public int UserID { get; set; }
+        /// <summary>
+        /// gets and sets the UserName
+        /// </summary>
         public string UserName { get; set; }
+        /// <summary>
+        /// gets and sets the UserEmail
+        /// </summary>
         public string UserEmail { get; set; }
+        /// <summary>
+        /// gets and sets the UserTel
+        /// </summary>
         public string UserTel { get; set; }
       
+        /// <summary>
+        /// this method loads all the data about the user with sql reader
+        /// </summary>
+        /// <param name="reader">sql data reader</param>
      public void LoadUsers(SqlDataReader reader)
         {
             UserID = Int32.Parse(reader["UserID"].ToString());
@@ -209,7 +225,7 @@ namespace BugTrackerDataLayer
             UserEmail = reader["UserEmail"].ToString();
             UserTel = reader["UserTel"].ToString();
            
-        }
+        }//end LOAD USERS
 
-    }
-}
+    }//END BUG
+}//END BUGS

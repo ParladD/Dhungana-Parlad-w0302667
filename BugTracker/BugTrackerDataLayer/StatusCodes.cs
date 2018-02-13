@@ -9,7 +9,10 @@ namespace BugTrackerDataLayer
 {
    public class StatusCodes
     {
-
+        /// <summary>
+        /// this method will return all the status code list
+        /// </summary>
+        /// <returns></returns>
         public List <StatusCode> GetStatusCodeList()
         {
             List<StatusCode> statusCodes = new List<StatusCode>();
@@ -44,15 +47,26 @@ namespace BugTrackerDataLayer
 
 
     public class StatusCode {
-
+        /// <summary>
+        /// gets and sets StatusCodeID
+        /// </summary>
+        
         public int StatusCodeID { get; set; }
+        /// <summary>
+        /// gets and sets StatusCodeDescription
+        /// </summary>
+     
         public string StatusCodeDescription { get; set;}
 
+        /// <summary>
+        /// this method will load the staus by reading the incoming data using sqlDataReader
+        /// </summary>
+        /// <param name="reader"></param>
         public void LoadStatusCode(SqlDataReader reader)
         {
             StatusCodeID = Int32.Parse(reader["StatusCodeID"].ToString());
             StatusCodeDescription = reader["StatusCodeDesc"].ToString();
-        }
+        }//end load status
 
     }
 

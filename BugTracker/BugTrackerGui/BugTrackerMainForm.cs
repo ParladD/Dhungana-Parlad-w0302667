@@ -15,14 +15,22 @@ namespace BugTrackerGui
         private string applicationName;
         private int bugAppID = 0;
         private int bugStatusID = 0;
-        private int userid = 0;
-        private int statid = 0;
+        private int currentSatusID = 0;
+        private int currentlyLoggedInUserId = 0;
+        private DateTime bugFixDate;
+
+        //constructor for gui 
         public BugTrackerMainForm()
         {
             InitializeComponent();
             HideTabs();
         }
 
+        /// <summary>
+        /// this method will be executed open form load and loads the nesscaary data
+        /// </summary>
+        /// <param name="sender">object sender</param>
+        /// <param name="e">e argument</param>
         private void BugTrackerMainForm_Load(object sender, EventArgs e)
         {
             try
@@ -57,16 +65,19 @@ namespace BugTrackerGui
         /// <summary>
         /// this method will be executed when user tries to log in to the system and check if the user exists
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">argument e</param>
         private void Button_Logon_Click(object sender, EventArgs e)
         {
             Users users = new Users();
-            if (users.GetUserConfirmation(UserNameInput.Text.ToString()))
+          
+            if (users.GetUserConfirmation(UserNameInput.Text.ToString()) != 0)
             {//checking if the users exists in the database
                 ShowTabs();
-              
-                bugDetail.Text = userid.ToString();
+
+                currentlyLoggedInUserId = users.GetUserConfirmation(UserNameInput.Text.ToString());
+                bugDetail.Text = currentlyLoggedInUserId.ToString();
+                //currentlyLoggedInUserId = user
             }
             else
             { //will be printing the error msg
@@ -108,8 +119,8 @@ namespace BugTrackerGui
             /// <summary>
         /// this method is for appList which will fill the text values based on the select indexs for apps
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">argument e</param>
         private void AppList_SelectedIndexChanged(object sender, EventArgs e)
         {
             App selectedApp = (App)AppList.SelectedValue;
@@ -137,8 +148,8 @@ namespace BugTrackerGui
         /// <summary>
         /// this method will insert or update the button based on the selected list from the list box
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">sender objects</param>
+        /// <param name="e">arguments e</param>
         private void Save_Application_Click(object sender, EventArgs e)
         {
             Applications applications = new Applications();
@@ -177,8 +188,8 @@ namespace BugTrackerGui
         /// <summary>
         /// this method will be used to delete the item based on selectedlist
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">arguments e</param>
 
         private void Delete_Application_Click(object sender, EventArgs e)
         {
@@ -210,6 +221,9 @@ namespace BugTrackerGui
 //---------------------------------- Bugs Group ----------------------------------------------------------------//
 //--------------------------------------------------------------------------------------------------------------//
        
+            /// <summary>
+            /// this methods loads all the bugs on list box
+            /// </summary>
         private void LoadBugList()
         {
             //creating new users object called users
@@ -230,7 +244,9 @@ namespace BugTrackerGui
 
         }//end load user list
             
-
+        /// <summary>
+        /// this method will load the appllications on llist box
+        /// </summary>
         private void BugAppListData()
         {
             Applications applications = new Applications();
@@ -245,6 +261,10 @@ namespace BugTrackerGui
             BugAppList.DisplayMember = "ApplicationName";
         }
 
+        /// <summary>
+        /// this method loads the data in the status combobox
+        /// </summary>
+        /// <param name="c">combox </param>
         private void BugStatusData(ComboBox c)
         {
             StatusCodes statusCodes = new StatusCodes();
@@ -259,7 +279,11 @@ namespace BugTrackerGui
             c.DisplayMember = "StatusCodeDescription";
         }
 
-
+        /// <summary>
+        /// this method will filter the bug based on the applications
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">arguments e</param>
         private void BugAppList_SelectedIndexChanged(object sender, EventArgs e)
         {
            
@@ -286,7 +310,11 @@ namespace BugTrackerGui
                 DisplayErrorMessage(sqlex.Message );
             }
         }
-
+        /// <summary>
+        /// this method will filter the bug based on the status
+        /// </summary>
+        /// <param name="sender">sender object </param>
+        /// <param name="e">arguments e</param>
         private void BugStatusList_SelectedIndexChanged(object sender, EventArgs e)
         {
             StatusCode status  = (StatusCode)BugStatusList.SelectedValue;
@@ -311,9 +339,13 @@ namespace BugTrackerGui
             {
                 DisplayErrorMessage(sqlex.Message);
             }
-        }
+        }//end bug status list
 
-
+        /// <summary>
+        /// this method will display the details of the specific bugs
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">arguments e</param>
         private void BugListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             Bugs bugs = new Bugs();
@@ -324,15 +356,16 @@ namespace BugTrackerGui
 
                 if (bugID != 0)
                 {
+                    //BugStatus.Visible = false;
                     BugID.Visible = true;
-                    bugs.GetBug(bugID);
+                    List<Bug> b = bugs.GetBug(bugID);
 
                     BugID.Text = bugID.ToString();
-                    BugSubmitDate.Text = bug.BugDate.ToString();
-                    BugDesc.Text = bug.BugDesc;
-                    bugDetail.Text = bug.BugDetailInfo;
-                    bugRepStep.Text = bug.BugRepStepInfo;
-                    BugFixDate.Text = bug.BugFixDate.ToString();
+                    BugSubmitDate.Text = b[0].BugDate.ToString();
+                    BugDesc.Text = b[0].BugDesc;
+                    bugDetail.Text = b[0].BugDetailInfo;
+                    bugRepStep.Text = b[0].BugRepStepInfo;
+                    BugFixDate.Text = b[0].BugFixDate.ToString();
 
                     DataTable logTable = Bugs.GetLog(bugID);
                     BugDataGrid.DataSource = logTable;
@@ -340,6 +373,8 @@ namespace BugTrackerGui
                 }
                 else
                 {
+                    BugStatus.Enabled = true;
+                    //BugStatus.Visible = true;
                     BugID.Visible = false;
                     BugSubmitDate.Clear();
                     BugDesc.Clear();
@@ -359,9 +394,13 @@ namespace BugTrackerGui
             }
 
 
-        }
+        }//end box list
 
-
+        /// <summary>
+        /// this method will save the data into the method or update the data based on the passed in id
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e"> arguments e</param>
         private void Save_Bug_Click(object sender, EventArgs e)
         {
             Bugs bugs = new Bugs();
@@ -371,19 +410,27 @@ namespace BugTrackerGui
             {
                 int bugID = bug.BugID;
                 //int userID = 
-                //int AppID = 
-                DateTime bugSubmitDate = DateTime.Parse(BugSubmitDate.Text.ToString());
-                string bugDesc = BugDesc.Text;
-                string bugDetails = bugDetail.Text;
-                string bugRepSteps = bugRepStep.Text;
-                DateTime bugFixDate = DateTime.Parse(BugFixDate.Text.ToString());
+                DateTime bugSubmitDate = Convert.ToDateTime(DateTime.UtcNow.Date);
+                string bugDesc = BugDesc.Text.ToString();
+                string bugDetails = bugDetail.Text.ToString();
+                string bugRepSteps = bugRepStep.Text.ToString();
+                string bugUpdate = BugUpdateComment.Text.ToString();
+                
 
 
                 if (bug.BugID == 0) {
 
-                    BugStatus.Enabled = true;
+                    bugs.InsertBug(bugAppID, currentlyLoggedInUserId, bugSubmitDate, bugDesc, bugDetails, bugRepSteps);
+                    LoadBugList();
+                    //inserting and loading bug
+                }
+                else
+                {
+                   
 
-
+                    bugs.UpdateBug(currentlyLoggedInUserId, bugDesc, bugDetails, bugRepSteps, bugFixDate, bugID, currentSatusID);
+                    LoadBugList();
+                    //updating and loading bug
                 }
 
             }
@@ -398,10 +445,28 @@ namespace BugTrackerGui
             }
 
 
-        }
+        }//end save bug_click
 
+        /// <summary>
+        /// this methods returns the status id of selected status
+        /// </summary>
+        /// <param name="sender">send object</param>
+        /// <param name="e">argumesnts</param>
+        private void BugStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+          
+            StatusCode stat = (StatusCode)BugStatus.SelectedValue;
 
+            if(stat.StatusCodeID != 0)
+            {
 
+                currentSatusID = stat.StatusCodeID;
+                if(stat.StatusCodeID == 5)
+                {
+                    bugFixDate = System.DateTime.Now;
+                }
+            }
+        }//End BugStatus
 
 
 
@@ -436,8 +501,8 @@ namespace BugTrackerGui
         /// <summary>
         /// this method populates the user information based on the selected user
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">send object</param>
+        /// <param name="e">arguments</param>
         private void UserList_SelectedIndexChanged(object sender, EventArgs e)
         {
             User selectedUser = (User)UserList.SelectedValue;
@@ -455,7 +520,6 @@ namespace BugTrackerGui
             else
             {
               
-
                 UserID.Visible = false;
                 UserName.Clear();
                 UserEmail.Clear();
@@ -478,13 +542,14 @@ namespace BugTrackerGui
             try
             {
                 int userID = Int32.Parse(UserID.Text);
-                string userName = UserName.Text;
-                string userEmail = UserEmail.Text;
-                string userTel = UserPhoneNum.Text;
+                string userName = UserName.Text.ToString();
+                string userEmail = UserEmail.Text.ToString();
+                string userTel = UserPhoneNum.Text.ToString();
 
                 if (selectedUser.UserID == 0)
                 {
                     users.InserUser(userName, userEmail, userTel);
+
                 }
                 else
                 {
@@ -505,7 +570,11 @@ namespace BugTrackerGui
 
 
 
-
+        /// <summary>
+        /// this method will delete the user record based on the id
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="e">arguments</param>
         private void Delete_User_Click(object sender, EventArgs e)
         {
             Users users = new Users();
@@ -530,7 +599,7 @@ namespace BugTrackerGui
             {
                 DisplayErrorMessage(sqlex.Message);
             }
-        }
+        }//end delete USER
 
 
 
@@ -575,7 +644,7 @@ namespace BugTrackerGui
             MessageBoxIcon.Error);
     }//end dispaly error msg
 
-      
+        
     }//end main form gui
 
 }//end namespace 
