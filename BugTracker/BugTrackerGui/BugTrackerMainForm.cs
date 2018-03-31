@@ -127,7 +127,7 @@ namespace BugTrackerGui
 
             if(selectedApp.ApplicationID!= 0)
             {
-                AppID.Visible = true;
+                AppID.Enabled = true;
                 AppID.Text = selectedApp.ApplicationID.ToString();
                 AppName.Text = selectedApp.ApplicationName;
                 AppVersion.Text = selectedApp.ApplicationVersion;
@@ -136,7 +136,8 @@ namespace BugTrackerGui
             }
             else
             {
-                AppID.Visible = false;
+                AppID.Enabled = false;
+                AppID.Text = selectedApp.ApplicationID.ToString();
                 AppName.Clear();
                 AppVersion.Clear();
                 AppDesc.Clear();
@@ -159,17 +160,19 @@ namespace BugTrackerGui
             try
             {
                 int appId = Int32.Parse(AppID.Text);
-                string appName = AppName.Text;
-                string appVersion = AppVersion.Text;
-                string appDesc = AppDesc.Text;
+                string appName = AppName.Text.ToString();
+                string appVersion = AppVersion.Text.ToString();
+                string appDesc = AppDesc.Text.ToString();
 
                 if (selectedApp.ApplicationID == 0)
                 {
                     applications.InsertApplication(appName, appVersion, appDesc);
+                    DisplayErrorMessage("Application has been Added");
                 }
                 else
                 {
                     applications.UpdateApplication(appId, appName, appVersion, appDesc);
+                    DisplayErrorMessage("Application has been Updated");
                 }
 
                 LoadApplicationList();
@@ -202,6 +205,7 @@ namespace BugTrackerGui
                 if (selectedApp.ApplicationID != 0)
                 {
                     applications.DeleteApplication(appId);
+                    DisplayErrorMessage("Application has been Deleted");
                 }
                 LoadApplicationList();
             }
@@ -357,10 +361,13 @@ namespace BugTrackerGui
                 if (bugID != 0)
                 {
                     //BugStatus.Visible = false;
-                    BugID.Visible = true;
+                    BugID.Enabled = true;
+                    BugSubmitDate.Enabled = true;
+                    BugFixDate.Enabled = true;
                     List<Bug> b = bugs.GetBug(bugID);
 
-                    BugID.Text = bugID.ToString();
+
+                    BugID.Text = b[0].BugID.ToString();
                     BugSubmitDate.Text = b[0].BugDate.ToString();
                     BugDesc.Text = b[0].BugDesc;
                     bugDetail.Text = b[0].BugDetailInfo;
@@ -375,12 +382,16 @@ namespace BugTrackerGui
                 {
                     BugStatus.Enabled = true;
                     //BugStatus.Visible = true;
-                    BugID.Visible = false;
+                    BugID.Text = bugID.ToString();
+                    BugID.Enabled = false;
                     BugSubmitDate.Clear();
+                    BugSubmitDate.Enabled = false;
                     BugDesc.Clear();
                     bugDetail.Clear();
                     bugRepStep.Clear();
                     BugFixDate.Clear();
+                    BugFixDate.Enabled = false;
+                    BugDataGrid.ClearSelection();
                 }
             }
             catch (SqlException sqlex)
@@ -408,13 +419,13 @@ namespace BugTrackerGui
 
             try
             {
-                int bugID = bug.BugID;
+                int bugID = Int32.Parse(BugID.Text.ToString());
                 //int userID = 
                 DateTime bugSubmitDate = Convert.ToDateTime(DateTime.UtcNow.Date);
                 string bugDesc = BugDesc.Text.ToString();
                 string bugDetails = bugDetail.Text.ToString();
                 string bugRepSteps = bugRepStep.Text.ToString();
-                string bugUpdate = BugUpdateComment.Text.ToString();
+               // string bugUpdate = BugUpdateComment.Text.ToString();
                 
 
 
@@ -509,7 +520,7 @@ namespace BugTrackerGui
 
             if (selectedUser.UserID!= 0)
             {
-                UserID.Visible = true;
+                UserID.Enabled = true;
 
                 UserID.Text = selectedUser.UserID.ToString();
                 UserName.Text = selectedUser.UserName;
@@ -520,7 +531,8 @@ namespace BugTrackerGui
             else
             {
               
-                UserID.Visible = false;
+                UserID.Enabled = false;
+                UserID.Text = selectedUser.UserID.ToString();
                 UserName.Clear();
                 UserEmail.Clear();
                 UserPhoneNum.Clear();
@@ -549,11 +561,13 @@ namespace BugTrackerGui
                 if (selectedUser.UserID == 0)
                 {
                     users.InserUser(userName, userEmail, userTel);
+                    DisplayErrorMessage("User has been Added");
 
                 }
                 else
                 {
                     users.UpdateUser(userID, userName, userEmail, userTel);
+                    DisplayErrorMessage("User has been updated");
                 }
 
                 LoadUsersList();
@@ -588,6 +602,7 @@ namespace BugTrackerGui
                 if (selectedUser.UserID != 0)
                 {
                     users.DeleteUser(userID);
+                    DisplayErrorMessage("User has been deleted");
                 }
                 LoadUsersList();
             }

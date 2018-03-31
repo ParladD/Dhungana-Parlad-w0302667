@@ -61,7 +61,7 @@ namespace BugTrackerDataLayer
                     parameter_AppID.Value = AppID;
                     command.Parameters.Add(parameter_AppID);
 
-                    //executing the non query
+                    //executing the non queryC:\Users\NSCCStudent\source\progRepo\Dhungana-Parlad-w0302667\BugTracker\BugTrackerGui\BugTrackerMainForm.cs
 
                     command.ExecuteNonQuery();
                 }
